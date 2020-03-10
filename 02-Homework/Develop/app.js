@@ -10,7 +10,48 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 ​
 const render = require("./lib/htmlRenderer");
 ​
-​
+inquirer.prompt ([
+{
+    type: 'input',
+    name: 'name',
+    message: 'What is your name?'
+},
+{ type: 'input',
+    name: 'id',
+    message: 'What is your ID?'
+},
+{
+    type: 'input',
+    name: 'email',
+    message: 'What is your Email?',
+
+}
+]).then(function(res){
+
+​class Employee {
+    constructor (name, id, email){
+    this.name = res.name;
+    this.id = res.id;
+    this.email = res.email;
+}
+
+    getName() {
+        console.log (`Name: ${this.name}`)
+    };
+
+getId (){
+    console.log (`ID: ${this.id}`)
+
+};
+
+getEmail(){
+    console.log (`Email: ${this.email}`)
+    }
+}
+})
+const employee = new Employee (`${this.name}, ${this.id}, ${this.emial}`);
+
+employee.getName();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 ​
@@ -30,6 +71,6 @@ const render = require("./lib/htmlRenderer");
 ​
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
+// for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work!```
