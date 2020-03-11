@@ -4,10 +4,10 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 ​
 const OUTPUT_DIR = path.resolve(__dirname, "output")
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 ​
 const render = require("./lib/htmlRenderer");
 ​
@@ -32,40 +32,50 @@ inquirer.prompt ([
     type: 'input',
     name: 'email',
     message: 'What is your Email?',
-},
-{
-    type: 'input',
-    name: 'officeNumber',
-    message: 'What is your Office Number?',
-},
-{
-    type: 'input',
-    name: 'github',
-    message: 'What is your github user name?',
-},
-{
-    type: 'input',
-    name: 'school',
-    message: 'Where do you go to school?',
+    }]).then( res => {
+        if (res.choices === [0]) {
+            prompts.next({
+                    type: 'input',
+                    name: 'officeNumber',
+                    message: 'What is your Office Number?',
+                }
+            )
+    }
+else if (res.choices === [1]) {
+    prompts.next({
+        type: 'input',
+        name: 'github',
+        message: 'What is your github user name?',
+    })
+} else {
+    prompts.next({
+        type: 'input',
+        name: 'school',
+        message: 'Where do you go to school?',
+    })
 }
-]).then(function(res){
-    const employee = [rep.name, rep.id, res.email]
-const manager = [];
-const engineer = [];
-const inter = [];
-
-if (res.choices === [0]){
-    manager.push(...employee, res.officeNumb);
-    ​}
-        else if (res.choices === [1]){
-engineer.push(...employee, res.github);
-        }else {
-            inter.push(...employee, res.school)
-        }
-        console.log(manager);
-        console.log(engineer);
-        console.log(inter);
-​}
+}).then(res => {
+    const employee = new Employee([res.name, res.id, res.email]);
+    const manager = new Manager([...employee, res.officeNumber]);
+    const engineer = new Engineer([...employee, res.github]);
+    const intern = new Intern([...employee, res.school]);
+    let team = [];
+    console.log(manager),
+    console.log(engineer),
+    console.log(intern)
+                                        if (res.choices === [0]) {
+                                            team.push(manager)
+                                    }
+                                else if (res.choices === [1]) {
+                                    team.push(engineer)
+                                } else {
+                                    team.push(intern)
+                                }
+    // fs.writeFile("REAMDE.md", md, function (err) {
+    //     if (err) throw err;
+    //     console.log("Here's your REAMDE");
+    // });
+    ​})
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
