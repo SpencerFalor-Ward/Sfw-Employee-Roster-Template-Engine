@@ -58,8 +58,8 @@ async function buildTeam() {
       const member = new Intern([...employee, int.school]);
       break;
   }
-  console.log(member);
   team.push(member);
+  console.log(member);
   let team = [];
   const addEmployee = await inquirer.prompt({
     type: "confirm",
