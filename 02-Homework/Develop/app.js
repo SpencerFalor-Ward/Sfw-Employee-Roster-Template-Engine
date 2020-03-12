@@ -31,7 +31,8 @@ async function buildTeam() {
       message: "What is theri Email?"
     }
   ]);
-  const employee = new Employee([res.name, res.id, res.email]);
+  const employee =  (res.name, res.id, res.email);
+  let team = [];
   switch (res.role) {
     case "Manager":
       const man = await inquirer.prompt({
@@ -39,7 +40,8 @@ async function buildTeam() {
         name: "officeNumber",
         message: "What is their office number?"
       });
-      const member = new Manager([...employee, man.officeNumber]);
+      const manager = new Manager([...employee, man.officeNumber]);
+      team.push(manager);
       break;
     case "Engineer":
       const eng = await inquirer.prompt({
@@ -47,27 +49,32 @@ async function buildTeam() {
         name: "github",
         message: "What is their github user name?"
       });
-      const member = new Engineer([...employee, eng.github]);
+      const engineer = new Engineer([...employee, eng.github]);
+      team.push(engineer);
       break;
     case "Intern":
-      var int = await inquirer.prompt({
+      const int = await inquirer.prompt({
         type: "input",
         name: "school",
         message: "Enter intern's school"
       });
-      const member = new Intern([...employee, int.school]);
+      const intern = new Intern([...employee, int.school]);
+      team.push(intern);
       break;
   }
-  team.push(member);
-  console.log(member);
-  let team = [];
+
+  //   team.push(member);
+//   console.log(manager);
+//   console.log(engineer);
+//   console.log(intern);
+
   const addEmployee = await inquirer.prompt({
     type: "confirm",
     name: "addEmployee",
     message: "Would you like to add another employee?",
     choices: ["Yes", "No"]
   });
-  addEmployee.confirm[0] ? buildTeam() : run();
+  addEmployee.choices === "Yes" && "Y" && "y" ? buildTeam() : run();
 }
 async function run() {
   await buildTeam();
