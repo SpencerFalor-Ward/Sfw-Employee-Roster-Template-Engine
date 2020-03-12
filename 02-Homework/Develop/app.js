@@ -8,11 +8,11 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-
-async function buildTeam(){
-const res =  await inquirer.prompt([
+async function buildTeam() {
+  const res = await inquirer.prompt([
     {
       type: "list",
       name: "role",
@@ -24,41 +24,30 @@ const res =  await inquirer.prompt([
       name: "name",
       message: "What is their name?"
     },
-    { type: "input",
-    name: "id",
-    message: "What is your ID?"
-},
+    { type: "input", name: "id", message: "What is your ID?" },
     {
       type: "input",
       name: "email",
       message: "What is theri Email?"
-    },
-    {
-      type: "list",
-      name: "addEmployee",
-      message: "Would you like to add another employee?",
-      choices: ["Yes", "No"]
     }
-  ])}
-
-const employee = new Employee([res.name, res.id, res.email]);
-
-switch (res.role) {
+  ]);
+  const employee = new Employee([res.name, res.id, res.email]);
+  switch (res.role) {
     case "Manager":
       const man = await inquirer.prompt({
         type: "input",
         name: "officeNumber",
-        message: "What is their Office Number?"
+        message: "What is their office number?"
       });
-    const member = new Manager([...employee, man.officeNumber]);
+      const member = new Manager([...employee, man.officeNumber]);
       break;
     case "Engineer":
-      var eng = await inquirer.prompt({
-       type: "input",
+      const eng = await inquirer.prompt({
+        type: "input",
         name: "github",
         message: "What is their github user name?"
       });
-       const member = new Engineer([...employee, res.github]);
+      const member = new Engineer([...employee, eng.github]);
       break;
     case "Intern":
       var int = await inquirer.prompt({
@@ -66,58 +55,34 @@ switch (res.role) {
         name: "school",
         message: "Enter intern's school"
       });
-     const member = new Intern([...employee, int.school]);
+      const member = new Intern([...employee, int.school]);
       break;
   }
+  console.log(member);
   team.push(member);
-
-
-
-
   let team = [];
-  console.log(manager);
-  console.log(engineer);
-  console.log(intern);
-  if (res.choices === res.choices[0]) {
-    team.push(manager);
-  } else if (res.choices === res.choices[1]) {
-    team.push(engineer);
-  } else {
-    team.push(intern);
-  }
-
-  .then(res => {
-    if (res.choices === "Manager") {
-      inquirer.prompts.next({
-        type: "input",
-        name: "officeNumber",
-        message: "What is their Office Number?"
-      });
-    } else if (res.choices === "Engineer") {
-      prompts.next({
-        type: "input",
-        name: "github",
-        message: "What is their github user name?"
-      });
-    } else {
-      prompts.next({
-        type: "input",
-        name: "school",
-        message: "Where do they go to school?"
-      });
-    }
-  })
-
-async function run() {
-    await responses ();
-    const newTeam = render(team);
-    return writeFile(newTeam)
+  const addEmployee = await inquirer.prompt({
+    type: "confirm",
+    name: "addEmployee",
+    message: "Would you like to add another employee?",
+    choices: ["Yes", "No"]
+  });
+  addEmployee.confirm[0] ? buildTeam() : run();
 }
-
+async function run() {
+  await buildTeam();
+  const newTeam = render(team);
+  writeFile(newTeam);
+}
 function writeFile(newTeam) {
-  return fs.mkdir(OUTPUT_DIR)
-    ? !fs.existsSync(OUTPUT_DIR)
-    : fs.mkdir(OUTPUT_DIR);
+  fs.existsSync(OUTPUT_DIR) ? null : fs.mkdir(OUTPUT_DIR);
+
+  fs.writeFile(outputPath, newTeam, function(err) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Your team was saved!");
+  });
 }
 run();
 // After the user has input all employees desired, call the `render` function (required
