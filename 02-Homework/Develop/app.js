@@ -10,81 +10,116 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-inquirer
-  .prompt([
+
+async function buildTeam(){
+const res =  await inquirer.prompt([
     {
       type: "list",
       name: "role",
-      message: "What is your role?",
+      message: "What the employee's role?",
       choices: ["Manager", "Engineer", "Intern"]
     },
     {
       type: "input",
       name: "name",
-      message: "What is your name?"
+      message: "What is their name?"
     },
-    { type: "input", name: "id", message: "What is your ID?" },
+    { type: "input",
+    name: "id",
+    message: "What is your ID?"
+},
     {
       type: "input",
       name: "email",
-      message: "What is your Email?"
+      message: "What is theri Email?"
     },
     {
       type: "list",
       name: "addEmployee",
       message: "Would you like to add another employee?",
-      choices: [
-        { name: "Yes", value: true },
-        {
-          name: "No",
-          value: false
-        }
-      ]
+      choices: ["Yes", "No"]
     }
-  ])
-  .then(res => {
-    if (res.choices === "Manager") {
-        inquirer.
-      prompts.next({
+  ])}
+
+const employee = new Employee([res.name, res.id, res.email]);
+
+switch (res.role) {
+    case "Manager":
+      const man = await inquirer.prompt({
         type: "input",
         name: "officeNumber",
-        message: "What is your Office Number?"
+        message: "What is their Office Number?"
+      });
+    const member = new Manager([...employee, man.officeNumber]);
+      break;
+    case "Engineer":
+      var eng = await inquirer.prompt({
+       type: "input",
+        name: "github",
+        message: "What is their github user name?"
+      });
+       const member = new Engineer([...employee, res.github]);
+      break;
+    case "Intern":
+      var int = await inquirer.prompt({
+        type: "input",
+        name: "school",
+        message: "Enter intern's school"
+      });
+     const member = new Intern([...employee, int.school]);
+      break;
+  }
+  team.push(member);
+
+
+
+
+  let team = [];
+  console.log(manager);
+  console.log(engineer);
+  console.log(intern);
+  if (res.choices === res.choices[0]) {
+    team.push(manager);
+  } else if (res.choices === res.choices[1]) {
+    team.push(engineer);
+  } else {
+    team.push(intern);
+  }
+
+  .then(res => {
+    if (res.choices === "Manager") {
+      inquirer.prompts.next({
+        type: "input",
+        name: "officeNumber",
+        message: "What is their Office Number?"
       });
     } else if (res.choices === "Engineer") {
       prompts.next({
         type: "input",
         name: "github",
-        message: "What is your github user name?"
+        message: "What is their github user name?"
       });
     } else {
       prompts.next({
         type: "input",
         name: "school",
-        message: "Where do you go to school?"
+        message: "Where do they go to school?"
       });
     }
   })
-  .then(res => {
-    const employee = new Employee([res.name, res.id, res.email]);
-    const manager = new Manager([...employee, res.officeNumber]);
-    const engineer = new Engineer([...employee, res.github]);
-    const intern = new Intern([...employee, res.school]);
-    let team = [];
-    console.log(manager);
-    console.log(engineer);
-    console.log(intern);
-    if (res.choices === [0]) {
-      team.push(manager);
-    } else if (res.choices === [1]) {
-      team.push(engineer);
-    } else {
-      team.push(intern);
-    }
-  });
-// fs.writeFile("REAMDE.md", md, function (err) {
-//     if (err) throw err;
-//     console.log("Here's your REAMDE");
-// });
+
+async function run() {
+    await responses ();
+    const newTeam = render(team);
+    return writeFile(newTeam)
+}
+
+function writeFile(newTeam) {
+  return fs.mkdir(OUTPUT_DIR)
+    ? !fs.existsSync(OUTPUT_DIR)
+    : fs.mkdir(OUTPUT_DIR);
+}
+run();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
