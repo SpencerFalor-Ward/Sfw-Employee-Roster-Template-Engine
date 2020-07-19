@@ -40,4 +40,4 @@ Send me an email :)
 
 ## Contact
 
-srfalorward@ucdavis.edu
+srpfw19@gmail.com
