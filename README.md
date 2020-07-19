@@ -1,10 +1,6 @@
-# HW-9-templateEngine
+# :computer: Sfw-Employee-Roster-Template-Engine :computer:
 
-<p align="center">
-<img alt="Team generator" src=C:\Users\Jessica\Google Drive\Bootcamp_SFW\HW-9-templateEngine\02-Homework\Assets\10-OOP-homework-demo-1.png>
-  </p>
-
-## Team generator![WordPress Theme Active Installs](https://img.shields.io/wordpress/theme/installs/twentysixteen)
+## [![Followers](https://img.shields.io/github/followers/SpencerFalor-Ward?style=social)](https://github.com/SpencerFalor-Ward?tab=followers) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Language](https://img.shields.io/github/languages/top/SpencerFalor-Ward/Sfw-Employee-Roster-Template-Engine)](https://github.com/SpencerFalor-Ward/Sfw-Employee-Roster-Template-Engine/search?l=javascript) [![Latest Commit](https://img.shields.io/github/last-commit/SpencerFalor-Ward/Sfw-Employee-Roster-Template-Engine)](https://github.com/SpencerFalor-Ward/Sfw-Employee-Roster-Template-Engine/graphs/commit-activity)
 
 A node based program to to generate a webpage that displays a work team's basic info
 
@@ -12,7 +8,7 @@ A node based program to to generate a webpage that displays a work team's basic 
 
 - [Installation](#Installation)
 - [Usage](#Usage)
-- [Liscence](#Liscence)
+- [License](#License)
 - [Contributing](#Contributing)
 - [Test](#Test)
 - [Questions](#Questions)
@@ -26,9 +22,9 @@ Install node packages Inquirer and jest, run "npm i inquirer" and "npm i jest
 
 Input each team member's information into the given prompts and the html file will be generated
 
-## Liscence
+## License  
 
-None
+Licensed under the [MIT License](https://choosealicense.com/licenses/mit/) license.
 
 ## Contributing
 
